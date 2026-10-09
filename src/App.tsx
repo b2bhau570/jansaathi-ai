@@ -2,11 +2,12 @@
 // Complete route configuration for Public, Patient, Clinical, Admin, and System tiers
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
+import { ClayBackgroundBlobs } from './components/common/ClayBackgroundBlobs';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -24,36 +25,51 @@ import { ReportsQueuePage } from './pages/ReportsQueuePage';
 import { ReferralsPage } from './pages/ReferralsPage';
 import { AuditPage } from './pages/AuditPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { PatientStatusPage } from './pages/PatientStatusPage';
 import { UnauthorizedPage, NotFoundPage } from './pages/SystemPages';
+import { SoftlyWellnessLandingPage } from './pages/SoftlyWellnessLandingPage';
 
-export const App: React.FC = () => {
+const AppLayout: React.FC = () => {
+  const location = useLocation();
+  const isSoftly = location.pathname.startsWith('/softly') || location.pathname.startsWith('/wellness');
+
+  if (isSoftly) {
+    return (
+      <Routes>
+        <Route path="/softly" element={<SoftlyWellnessLandingPage />} />
+        <Route path="/wellness" element={<SoftlyWellnessLandingPage />} />
+      </Routes>
+    );
+  }
+
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <Router>
-          <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans antialiased selection:bg-teal-800 selection:text-white">
-            <Header />
-            <main className="flex-1">
-              <Routes>
-                {/* Public Tier */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/privacy" element={<PrivacyPage />} />
-                <Route path="/terms" element={<AboutPage />} />
+    <div className="flex flex-col min-h-screen bg-[#F4F1FA] text-[#332F3A] font-sans antialiased relative selection:bg-purple-200 selection:text-purple-900">
+      <ClayBackgroundBlobs />
+      <Header />
+      <main className="flex-1 relative z-10">
+        <Routes>
+          {/* Public Tier */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<AboutPage />} />
                 <Route path="/security" element={<SecurityPage />} />
                 <Route path="/accessibility" element={<AccessibilityPage />} />
                 <Route path="/contact" element={<ContactPage />} />
 
-                {/* Patient Intake Workflow */}
+                {/* Patient Intake Workflow & Status Tracker */}
                 <Route path="/patient" element={<PatientWorkflowPage />} />
                 <Route path="/patient/consent" element={<PatientWorkflowPage />} />
                 <Route path="/patient/language" element={<PatientWorkflowPage />} />
                 <Route path="/patient/input" element={<PatientWorkflowPage />} />
                 <Route path="/patient/review" element={<PatientWorkflowPage />} />
                 <Route path="/patient/submission" element={<PatientWorkflowPage />} />
+                <Route path="/status" element={<PatientStatusPage />} />
+                <Route path="/patient/status" element={<PatientStatusPage />} />
 
                 {/* Staff / Clinical Tier */}
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<LoginPage initialTab="register" />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/cases" element={<CasesQueuePage />} />
                 <Route path="/cases/:id" element={<CaseDetailPage />} />
@@ -77,6 +93,15 @@ export const App: React.FC = () => {
             </main>
             <Footer />
           </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <AuthProvider>
+        <Router>
+          <AppLayout />
         </Router>
       </AuthProvider>
     </LanguageProvider>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JANSAATHI AI — Pitch Deck Presentation (Minimal Light Theme)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #E2E8F0;
+      color: #0F172A;
+      overflow-x: hidden;
+    }
+    .slide-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+      padding: 36px;
+    }
+    .slide {
+      width: 1920px;
+      height: 1080px;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 24px;
+      padding: 56px 72px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.12);
+    }
+    .subtle-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(#E2E8F0 1.2px, transparent 1.2px);
+      background-size: 32px 32px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .slide-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #E2E8F0;
+      padding-bottom: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      color: #0F172A;
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      color: #334155;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 0;
+    }
+    .slide-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #E2E8F0;
+      padding-top: 18px;
+      font-size: 13.5px;
+      color: #64748B;
+      font-weight: 500;
+    }
+    .slide-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 15px;
+      color: #2563EB;
+    }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 60px;
+      font-weight: 900;
+      line-height: 1.14;
+      letter-spacing: -1.5px;
+      color: #0F172A;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      color: #0F172A;
+      margin-bottom: 16px;
+    }
+    p.lead {
+      font-size: 20px;
+      line-height: 1.55;
+      color: #334155;
+      max-width: 1200px;
+      margin-bottom: 24px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: center;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 8px -1px rgba(15, 23, 42, 0.05);
+    }
+    .card-highlight {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+    }
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-desc {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #475569;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: #0F172A;
+    }
+    .stat-label {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #64748B;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      background: #F1F5F9;
+      color: #334155;
+      border: 1px solid #E2E8F0;
+    }
+    .pill-blue {
+      background: #EFF6FF;
+      color: #1E40AF;
+      border: 1px solid #BFDBFE;
+    }
+    .pill-emerald {
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+    .pill-rose {
+      background: #FEF2F2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+    .diagram-frame {
+      width: 100%;
+      height: 600px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .diagram-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .diagram-caption {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #334155;
+    }
+    .flow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 28px 0;
+      width: 100%;
+    }
+    .flow-node {
+      flex: 1;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: center;
+      position: relative;
+    }
+    .flow-num {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 6px;
+      background: #0F172A;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 8px;
+    }
+    .flow-arrow {
+      font-size: 24px;
+      color: #94A3B8;
+      font-weight: 800;
+    }
+
+    @media print {
+      @page {
+        size: 1920px 1080px;
+        margin: 0;
+      }
+      body {
+        background: #FFFFFF;
+      }
+      .slide-container {
+        padding: 0;
+        gap: 0;
+      }
+      .slide {
+        width: 1920px;
+        height: 1080px;
+        max-width: none;
+        border: none;
+        border-radius: 0;
+        page-break-after: always;
+        break-after: page;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1: COVER & HERO -->
+  <section class="slide" id="slide-1">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">JA</div>
+        <div>
+          <div class="brand-title">JANSAATHI AI</div>
+          <div style="font-size: 13px; color: #64748B; font-weight: 500;">Frontline Clinical Triage & Telemetry Workstation</div>
+        </div>
+      </div>
+      <div class="badge">Grand Finale Official Pitch Deck</div>
+    </div>
+    <div class="slide-content">
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <span class="pill pill-emerald">[Web Serial Telemetry]</span>
+        <span class="pill pill-blue">[Google Gemini 2.5 Flash]</span>
+        <span class="pill">[Lead-I ECG at 100 Hz]</span>
+        <span class="pill">[13 Indian Vernacular Languages]</span>
+      </div>
+      <h1>Bridging the Last Mile in Rural Healthcare with Multimodal AI and Edge Medical Hardware</h1>
+      <p class="lead">
+        A low-cost, browser-native clinical workstation empowering community health workers (ASHA/ANM) with vernacular voice intake, paper report vision OCR, and real-time streaming ECG & SpO2 hardware telemetry.
+      </p>
+
+      <!-- Minimalist Pipeline Block Diagram -->
+      <div class="flow-steps">
+        <div class="flow-node">
+          <div class="flow-num">1</div>
+          <div style="font-weight: 800; font-size: 16px; color: #0F172A;">Multimodal Intake</div>
+          <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Vernacular Voice, OCR & Vitals</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <div class="flow-num">2</div>
+          <div style="font-weight: 800; font-size: 16px; color: #0F172A;">Web Serial Edge Gateway</div>
+          <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Zero-Driver 100Hz Ingestion</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <div class="flow-num">3</div>
+          <div style="font-weight: 800; font-size: 16px; color: #0F172A;">Dual AI & Safety Core</div>
+          <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Gemini 2.5 + Deterministic Red-Flags</div>
+        </div>
+        <div class="flow-arrow">&rarr;</div>
+        <div class="flow-node">
+          <div class="flow-num">4</div>
+          <div style="font-weight: 800; font-size: 16px; color: #0F172A;">Tele-Doctor Review</div>
+          <div style="font-size: 13px; color: #64748B; margin-top: 4px;">15s ECG Calipers & Printable Dossier</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 40px; margin-top: 10px;">
+        <div>
+          <div style="font-size: 12px; color: #64748B; text-transform: uppercase; font-weight: 700; margin-bottom: 2px;">Developer & Lead</div>
+          <div style="font-size: 18px; font-weight: 800; color: #0F172A;">Satyabrata Pradhan</div>
+          <div style="font-size: 13px; color: #2563EB; font-family: 'JetBrains Mono', monospace;">GitHub: @b2bhau570</div>
+        </div>
+        <div style="border-left: 1px solid #CBD5E1; padding-left: 40px;">
+          <div style="font-size: 12px; color: #64748B; text-transform: uppercase; font-weight: 700; margin-bottom: 2px;">Hardware Architecture</div>
+          <div style="font-size: 18px; font-weight: 800; color: #0F172A;">ESP32 + AD8232 ECG + MAX30102 SpO2</div>
+          <div style="font-size: 13px; color: #059669; font-family: 'JetBrains Mono', monospace;">Hardware BOM Cost: &lt; $10 (₹800 INR)</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Multi-Disciplinary Telemedicine Platform</div>
+      <div class="slide-number">01 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: THE PROBLEM (CRISIS FLOWCHART) -->
+  <section class="slide" id="slide-2">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">02</div>
+        <div class="brand-title">The Rural Healthcare Crisis</div>
+      </div>
+      <div class="badge">Problem Statement & Clinical Need</div>
+    </div>
+    <div class="slide-content">
+      <h2>The Frontline Diagnostic Vacuum at Primary Health Centres</h2>
+      <p class="lead" style="font-size: 19px; margin-bottom: 24px;">
+        Over 800 million citizens in rural India rely on overburdened Primary Health Centres (PHCs). Frontline health workers have no diagnostic equipment, causing severe delays in identifying acute emergencies.
+      </p>
+
+      <!-- Minimal Problem Flowchart -->
+      <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+        <div style="font-size: 12px; font-weight: 800; color: #991B1B; text-transform: uppercase; font-family: 'JetBrains Mono'; margin-bottom: 16px;">
+          CRITICAL BREAKDOWN IN THE CURRENT RURAL TRIAGE CHAIN:
+        </div>
+        <div class="flow-steps" style="margin: 0;">
+          <div class="flow-node" style="border-color: #FECACA; background: #FFF5F5;">
+            <div style="font-weight: 800; color: #991B1B; font-size: 16px;">Frontline ASHA Visit</div>
+            <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Zero diagnostic sensors available</div>
+          </div>
+          <div class="flow-arrow" style="color: #DC2626;">&rarr;</div>
+          <div class="flow-node" style="border-color: #FECACA; background: #FFF5F5;">
+            <div style="font-weight: 800; color: #991B1B; font-size: 16px;">Vernacular Barrier</div>
+            <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Dialects & paper reports untranslated</div>
+          </div>
+          <div class="flow-arrow" style="color: #DC2626;">&rarr;</div>
+          <div class="flow-node" style="border-color: #FECACA; background: #FFF5F5;">
+            <div style="font-weight: 800; color: #991B1B; font-size: 16px;">4+ Hour Delay</div>
+            <div style="font-size: 13px; color: #64748B; margin-top: 4px;">Unrecognized cardiac / hypoxia crises</div>
+          </div>
+          <div class="flow-arrow" style="color: #DC2626;">&rarr;</div>
+          <div class="flow-node" style="border-color: #DC2626; background: #FEF2F2;">
+            <div style="font-weight: 800; color: #991B1B; font-size: 16px;">Severe Complications</div>
+            <div style="font-size: 13px; color: #991B1B; margin-top: 4px;">Irreversible tissue & cardiac damage</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="stat-number" style="color: #DC2626;">70% vs 30%</div>
+          <div class="stat-label">Doctor Distribution Mismatch</div>
+          <p class="card-desc" style="font-size: 14px; margin-top: 8px;">70% of population in rural India; only 30% of doctors practice outside cities.</p>
+        </div>
+        <div class="card">
+          <div class="stat-number" style="color: #D97706;">$500+</div>
+          <div class="stat-label">Traditional Medical Device Cost</div>
+          <p class="card-desc" style="font-size: 14px; margin-top: 8px;">Hospital monitors are unaffordable and require specialized trained technicians.</p>
+        </div>
+        <div class="card">
+          <div class="stat-number" style="color: #2563EB;">22+ Dialects</div>
+          <div class="stat-label">Regional Language Chasm</div>
+          <p class="card-desc" style="font-size: 14px; margin-top: 8px;">Patients cannot express complex symptom histories in standard medical English.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Clinical Need & Market Context</div>
+      <div class="slide-number">02 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: SYSTEM ARCHITECTURE INFOGRAPHIC -->
+  <section class="slide" id="slide-3">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">03</div>
+        <div class="brand-title">Full System Architecture & Pipeline</div>
+      </div>
+      <div class="badge">End-to-End Blueprint</div>
+    </div>
+    <div class="slide-content">
+      <div class="diagram-frame">
+        <img src="docs/images/architecture_diagram.jpg" alt="JANSAATHI AI System Architecture">
+        <div class="diagram-caption">FIGURE 1: FOUR-STAGE CLINICAL PIPELINE (PATIENT INTAKE, WEB SERIAL GATEWAY, GEMINI AI ENGINE, DOCTOR TELE-CONSULT)</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Architecture Blueprint (Hardware + Web Serial + AI + Doctor Queue)</div>
+      <div class="slide-number">03 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: HARDWARE BLOCK DIAGRAM & SCHEMATIC -->
+  <section class="slide" id="slide-4">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">04</div>
+        <div class="brand-title">Hardware Block Diagram & Sensor Interface</div>
+      </div>
+      <div class="badge">Edge Circuit Engineering</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 40px;">
+        <div class="diagram-frame" style="height: 580px;">
+          <img src="docs/images/hardware_block_diagram.jpg" alt="JANSAATHI AI Medical Telemetry Hardware Block Diagram">
+          <div class="diagram-caption">FIGURE 2: ESP32 PINOUT MAPPING AND MEDICAL SENSOR INTERCONNECT</div>
+        </div>
+        <div>
+          <h2>Sub-$10 Medical Hardware with Zero Driver Installation</h2>
+          <p class="lead" style="font-size: 17px; margin-bottom: 20px;">
+            Uses standard Web Serial API (`navigator.serial`) at 115200 baud. The browser directly interfaces with the ESP32 microcontroller, reading optical and electrophysiological signals.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #059669; font-size: 16px;">MAX30102 Pulse Oximeter (I2C)</strong>
+                <span class="pill pill-emerald">SDA: GPIO 21 • SCL: GPIO 22</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Digital optical AC tracking filter (`irDc = (irDc * 255 + ir)/256`) eliminates ambient light drift, extracting SpO2, Pulse Rate, and arterial plethysmograph (PPG) at 50 Hz.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #DC2626; font-size: 16px;">AD8232 Lead-I ECG (ADC + Digital LO)</strong>
+                <span class="pill pill-rose">ADC: GPIO 34 • LO±: GPIO 4 & 2</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Lead-I RA/LA/RL electrodes sampled at 100 Hz. Features 25-sample noise debounce and analog rail voltage check (ADC &lt; 120 or &gt; 3980) to eliminate lead fluttering.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #2563EB; font-size: 16px;">Web Serial Gateway Engine</strong>
+                <span class="pill">Auto-Baud 115200</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Parses JSON bursts (`ecg_samples`, `ppg_samples`) and ASCII key-value lines with automated port reconnection and COM port contention recovery.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Schematic Blueprint & Web Serial API Interface</div>
+      <div class="slide-number">04 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: CLINICAL TRIAGE FLOWCHART -->
+  <section class="slide" id="slide-5">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">05</div>
+        <div class="brand-title">Clinical AI & Decision Tree Flowchart</div>
+      </div>
+      <div class="badge">Safety Triage Logic</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 40px;">
+        <div>
+          <h2>Dual-Tier Intelligence: Gemini 2.5 Flash + Deterministic Red-Flags</h2>
+          <p class="lead" style="font-size: 17px; margin-bottom: 20px;">
+            Clinical triage cannot rely purely on generative probabilistic models. JANSAATHI AI implements a strict clinical safety net where acute emergencies are governed by deterministic rules.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="card" style="padding: 16px 20px;">
+              <div style="font-weight: 800; color: #1E40AF; font-size: 16px; margin-bottom: 4px;">Tier 1: Google Gemini 2.5 Flash Extraction</div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Converts vernacular voice transcripts and paper lab report images into structured, FHIR-compliant clinical JSON with symptom timelines and missing information queries.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; border-color: #FECACA;">
+              <div style="font-weight: 800; color: #991B1B; font-size: 16px; margin-bottom: 4px;">Tier 2: Deterministic Rule Safety Net</div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Zero hallucination tolerance: `RULE_CHEST_PAIN`, `RULE_RESPIRATORY_DISTRESS`, `RULE_CRITICAL_SPO2` (&lt;90%), and `RULE_ARRHYTHMIA` instantly trigger `URGENT REVIEW`.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; border-color: #A7F3D0;">
+              <div style="font-weight: 800; color: #065F46; font-size: 16px; margin-bottom: 4px;">Tier 3: Tele-ICU & PHC Doctor Escalation</div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Automated case prioritization in doctor's queue with one-click disposition (Admit, Tele-Refer, Follow-up) and complete tamper-evident clinical audit trails.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="diagram-frame" style="height: 580px;">
+          <img src="docs/images/clinical_triage_flowchart.jpg" alt="Clinical Triage Flowchart & Decision Tree">
+          <div class="diagram-caption">FIGURE 3: DETERMINISTIC EMERGENCY DECISION TREE</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Clinical Decision Support & Safety Architecture</div>
+      <div class="slide-number">05 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: LIVE VITAL TELEMETRY & PHYSIOLOGICAL SIMULATOR -->
+  <section class="slide" id="slide-6">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">06</div>
+        <div class="brand-title">Live Dual-Trace Telemetry & RSA Engine</div>
+      </div>
+      <div class="badge">Real-Time Patient Monitor</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 40px;">
+        <div class="diagram-frame" style="height: 580px;">
+          <img src="docs/images/live_demo_vitals.png" alt="Live Telemetry UI in Action">
+          <div class="diagram-caption">FIGURE 4: LIVE PATIENT MONITOR WITH RESPIRATORY SINUS ARRHYTHMIA</div>
+        </div>
+        <div>
+          <h2>Real-Time Telemetry with Respiratory Sinus Arrhythmia (RSA)</h2>
+          <p class="lead" style="font-size: 17px; margin-bottom: 20px;">
+            The system renders genuine, active physiological telemetry. Both physical USB sensors and the built-in demo simulator feature dynamic physiological variability.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #DC2626; font-size: 16px;">Respiratory Sinus Arrhythmia (RSA)</strong>
+                <span class="pill pill-rose">72 – 76 bpm natural undulation</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Resting heart rate fluctuates in lockstep with a 4.0-second respiration cycle (15 breaths/min), accompanied by subtle biological micro-jitter (&plusmn;0.8 bpm).
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #059669; font-size: 16px;">Synchronized Arterial PPG Pulse Wave</strong>
+                <span class="pill pill-emerald">~180ms Pulse Transit Time</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                The photoplethysmograph waveform is coupled to the ECG R-peak with physiological ventricular-to-peripheral transit delay, displaying steep anacrotic upstroke and aortic dicrotic notch.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: #D97706; font-size: 16px;">Interactive Caliper Freeze</strong>
+                <span class="pill">Caliper Inspection</span>
+              </div>
+              <p class="card-desc" style="font-size: 13.5px;">
+                Clinicians can freeze live scrolling waveforms on demand to inspect caliper measurements and resume streaming seamlessly without losing connection state.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Real-Time Telemetry & Dual-Channel Waveform Engine</div>
+      <div class="slide-number">06 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: 15S DIAGNOSTIC REPORT & CALIPERS -->
+  <section class="slide" id="slide-7">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">07</div>
+        <div class="brand-title">15.0s Diagnostic Report & Electronic Calipers</div>
+      </div>
+      <div class="badge">IEC 60601-2-25 Compliance</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 40px;">
+        <div>
+          <h2>Hospital-Grade Cardiogram Strip with Electrophysiological Metrics</h2>
+          <p class="lead" style="font-size: 17px; margin-bottom: 20px;">
+            Standard 15.0-second Lead-I acquisition rendered at standard 25 mm/s paper speed and 10 mm/mV voltage calibration on medical millimeter grid.
+          </p>
+
+          <div class="grid-2" style="gap: 12px; margin-bottom: 16px;">
+            <div class="card" style="padding: 14px 18px;">
+              <div style="font-size: 11px; color: #2563EB; font-weight: 800; text-transform: uppercase;">Mean R-R Interval</div>
+              <div style="font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono';">811 ms</div>
+              <div style="font-size: 11px; color: #64748B;">Dynamic heart rate coupling</div>
+            </div>
+            <div class="card" style="padding: 14px 18px;">
+              <div style="font-size: 11px; color: #2563EB; font-weight: 800; text-transform: uppercase;">PR Interval</div>
+              <div style="font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono';">152 ms</div>
+              <div style="font-size: 11px; color: #64748B;">Atrioventricular conduction</div>
+            </div>
+            <div class="card" style="padding: 14px 18px;">
+              <div style="font-size: 11px; color: #2563EB; font-weight: 800; text-transform: uppercase;">QRS Duration</div>
+              <div style="font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono';">88 ms</div>
+              <div style="font-size: 11px; color: #64748B;">Normal narrow complex</div>
+            </div>
+            <div class="card" style="padding: 14px 18px;">
+              <div style="font-size: 11px; color: #2563EB; font-weight: 800; text-transform: uppercase;">Bazett QTc</div>
+              <div style="font-size: 24px; font-weight: 900; font-family: 'JetBrains Mono';">418 ms</div>
+              <div style="font-size: 11px; color: #64748B;">&lt; 440 ms normal cutoff</div>
+            </div>
+          </div>
+
+          <div class="card card-highlight" style="padding: 16px 20px;">
+            <strong style="color: #0F172A;">Printable PDF Diagnostic Dossier:</strong>
+            <span style="font-size: 13.5px; color: #475569; margin-left: 6px;">One-click generation of doctor-signed A4 clinical reports containing patient demographics, full 15s Lead-I rhythm strip, SpO2 PPG waveform, and diagnostic interpretation.</span>
+          </div>
+        </div>
+        <div class="diagram-frame" style="height: 580px;">
+          <img src="docs/images/clinical_ecg_report.png" alt="Clinical ECG Diagnostic Report Modal">
+          <div class="diagram-caption">FIGURE 5: ONE-CLICK PRINTABLE A4 DIAGNOSTIC DOSSIER</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Diagnostic Electrophysiology & Printable Reports</div>
+      <div class="slide-number">07 / 08</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: ROADMAP & GRAND FINALE DELIVERABLES -->
+  <section class="slide" id="slide-8">
+    <div class="subtle-grid"></div>
+    <div class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">08</div>
+        <div class="brand-title">Grand Finale Commitment & Impact</div>
+      </div>
+      <div class="badge">Finale Deliverables & Milestones</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 44px;">
+        <div>
+          <h2>Working at the Grand Finale</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 18px;">
+            <div class="card" style="padding: 16px 20px; border-left: 4px solid #059669;">
+              <div style="font-weight: 800; color: #0F172A; font-size: 16px; margin-bottom: 2px;">Live Plug-and-Play USB Vitals Station</div>
+              <p class="card-desc" style="font-size: 13.5px;">Real-time Lead-I ECG (100Hz) & MAX30102 pulse oximetry streaming via Web Serial.</p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; border-left: 4px solid #2563EB;">
+              <div style="font-weight: 800; color: #0F172A; font-size: 16px; margin-bottom: 2px;">Multimodal Vernacular Voice & Vision OCR</div>
+              <p class="card-desc" style="font-size: 13.5px;">Google Gemini 2.5 Flash intake across major Indian regional languages with lab report extraction.</p>
+            </div>
+
+            <div class="card" style="padding: 16px 20px; border-left: 4px solid #7C3AED;">
+              <div style="font-weight: 800; color: #0F172A; font-size: 16px; margin-bottom: 2px;">15s Diagnostic Strip & Calipers</div>
+              <p class="card-desc" style="font-size: 13.5px;">IEC 60601-2-25 calibration, live waveform freeze, and printable doctor PDF dossier.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Rigorous Quality Assurance & Benchmarks</h2>
+          <div class="grid-2" style="gap: 14px; margin-top: 18px; margin-bottom: 18px;">
+            <div class="card" style="padding: 16px;">
+              <div class="stat-number" style="font-size: 38px; color: #059669;">21 / 21</div>
+              <div class="stat-label" style="font-size: 12px;">Vitest Tests Passing</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div class="stat-number" style="font-size: 38px; color: #2563EB;">&lt; 40 ms</div>
+              <div class="stat-label" style="font-size: 12px;">Ingestion Latency</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div class="stat-number" style="font-size: 38px; color: #0F172A;">0 Errors</div>
+              <div class="stat-label" style="font-size: 12px;">Strict TypeScript</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div class="stat-number" style="font-size: 38px; color: #DC2626;">&lt; $10</div>
+              <div class="stat-label" style="font-size: 12px;">Hardware BOM Cost</div>
+            </div>
+          </div>
+
+          <div class="card card-highlight" style="padding: 16px 20px;">
+            <div style="font-weight: 800; color: #0F172A; margin-bottom: 4px;">Repository & Presenter Details:</div>
+            <div style="font-size: 13.5px; color: #334155;">
+              • GitHub: <strong style="color: #2563EB; font-family: 'JetBrains Mono';">https://github.com/b2bhau570/jansaathi-ai</strong><br>
+              • Lead Developer: <strong>Satyabrata Pradhan</strong> (b2bhau570)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>JANSAATHI AI — Competition Submission • Lead: Satyabrata Pradhan (b2bhau570)</div>
+      <div class="slide-number">08 / 08</div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

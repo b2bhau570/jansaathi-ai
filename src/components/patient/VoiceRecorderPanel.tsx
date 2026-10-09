@@ -1,5 +1,5 @@
-// JANSAATHI AI - Real Voice Recording & Transcription Panel
-// Uses browser-native Web Speech API with honest capability detection and manual editing
+// JANSAATHI AI - High-Fidelity Claymorphism Voice Recording & Transcription Panel
+// Tactile microphone orb, zero-gravity breathing visualizer, and recessed transcription box
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -79,39 +79,39 @@ export const VoiceRecorderPanel: React.FC<VoiceRecorderPanelProps> = ({
 
   if (!isSpeechSupported || speechNotice) {
     return (
-      <div className="bg-amber-50 border border-amber-300 rounded p-6 text-center max-w-xl mx-auto my-4">
-        <AlertCircle className="w-8 h-8 text-amber-700 mx-auto mb-2" />
-        <h3 className="font-bold text-amber-950 text-sm">Speech Input Unavailable</h3>
-        <p className="text-xs text-amber-900 mt-1 mb-4 leading-relaxed">
+      <div className="clay-card rounded-[32px] border-amber-300/80 bg-amber-500/10 p-7 text-center max-w-xl mx-auto my-4 shadow-clayPill">
+        <AlertCircle className="w-10 h-10 text-amber-700 mx-auto mb-2" />
+        <h3 className="font-black text-amber-950 text-base font-heading">Speech Input Unavailable</h3>
+        <p className="text-xs text-amber-900 mt-1 mb-4 leading-relaxed font-medium">
           {speechNotice || `Voice recognition is not currently supported for ${languageInfo.name} in this browser environment.`}
         </p>
-        <p className="text-xs text-slate-700 font-medium">
-          Please switch to <strong>Text Input</strong> to enter symptoms.
+        <p className="text-xs text-[#332F3A] font-bold">
+          Please switch to <strong>Type (Text)</strong> tab to enter symptoms.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded border border-slate-300 p-6 shadow-xs">
+    <div className="max-w-2xl mx-auto clay-card rounded-[36px] p-7 md:p-9">
       <div className="text-center mb-6">
-        <h3 className="text-lg font-bold text-slate-900">Patient Voice Dictation</h3>
-        <p className="text-xs text-slate-600 mt-1">
-          Recording in: <strong>{languageInfo.name} ({languageInfo.nativeName})</strong>. Speak clearly into the microphone.
+        <h3 className="text-2xl font-black text-[#332F3A] font-heading">Patient Voice Dictation</h3>
+        <p className="text-xs font-semibold text-[#635F69] mt-1">
+          Recording in: <strong className="text-[#7C3AED]">{languageInfo.name} ({languageInfo.nativeName})</strong>. Speak clearly into the microphone.
         </p>
       </div>
 
-      {/* Mic Status Visualizer */}
-      <div className="flex flex-col items-center justify-center my-6">
+      {/* Mic Status Visualizer Orb */}
+      <div className="flex flex-col items-center justify-center my-7">
         {status === 'IDLE' && (
           <button
             type="button"
             onClick={handleStartRecording}
-            className="w-20 h-20 rounded-full bg-teal-800 hover:bg-teal-700 text-white flex flex-col items-center justify-center shadow-md transition-transform hover:scale-105"
+            className="w-24 h-24 rounded-full bg-gradient-to-br from-[#A78BFA] via-[#7C3AED] to-[#DB2777] text-white flex flex-col items-center justify-center shadow-clayOrb hover:-translate-y-1 active:scale-[0.90] cursor-pointer transition-all duration-200"
             aria-label="Start recording microphone"
           >
-            <Mic className="w-8 h-8 mb-1" />
-            <span className="text-[10px] font-semibold uppercase tracking-wider">Start</span>
+            <Mic className="w-9 h-9 mb-1 drop-shadow-sm" />
+            <span className="text-[10px] font-black uppercase tracking-wider font-heading">Start</span>
           </button>
         )}
 
@@ -120,14 +120,14 @@ export const VoiceRecorderPanel: React.FC<VoiceRecorderPanelProps> = ({
             <button
               type="button"
               onClick={handleStopRecording}
-              className="w-20 h-20 rounded-full bg-red-700 hover:bg-red-800 text-white flex flex-col items-center justify-center shadow-lg animate-pulse"
+              className="w-24 h-24 rounded-full bg-gradient-to-br from-rose-400 to-rose-600 text-white flex flex-col items-center justify-center shadow-clayOrb animate-pulse hover:-translate-y-1 active:scale-[0.90] cursor-pointer transition-all duration-200"
               aria-label="Stop recording microphone"
             >
-              <Square className="w-7 h-7 mb-1" />
-              <span className="text-[10px] font-semibold uppercase tracking-wider">Stop</span>
+              <Square className="w-8 h-8 mb-1" />
+              <span className="text-[10px] font-black uppercase tracking-wider font-heading">Stop</span>
             </button>
-            <div className="flex items-center gap-2 mt-4 text-xs font-semibold text-red-700">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></span>
+            <div className="flex items-center gap-2 mt-4 text-xs font-bold text-rose-600 font-heading">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
               <span>Listening to speech in real time...</span>
             </div>
           </div>
@@ -135,42 +135,42 @@ export const VoiceRecorderPanel: React.FC<VoiceRecorderPanelProps> = ({
 
         {status === 'PROCESSING' && (
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-slate-200 border-2 border-slate-400 flex items-center justify-center animate-spin">
-              <Volume2 className="w-7 h-7 text-slate-700" />
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 text-white flex items-center justify-center shadow-clayOrb animate-spin">
+              <Volume2 className="w-8 h-8" />
             </div>
-            <span className="text-xs font-medium text-slate-700 mt-3">Converting speech to text...</span>
+            <span className="text-xs font-bold text-[#635F69] mt-3 font-heading">Converting speech to text...</span>
           </div>
         )}
 
         {status === 'ERROR' && (
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-red-100 border border-red-300 flex items-center justify-center">
-              <AlertCircle className="w-8 h-8 text-red-700" />
+            <div className="w-20 h-20 rounded-full bg-rose-100 border border-rose-300 flex items-center justify-center text-rose-600 shadow-clayPill">
+              <AlertCircle className="w-9 h-9" />
             </div>
-            <span className="text-xs font-semibold text-red-700 mt-2">Recording Error</span>
+            <span className="text-xs font-bold text-rose-700 mt-2 font-heading">Recording Error</span>
           </div>
         )}
       </div>
 
       {errorMessage && (
-        <div role="alert" className="mb-4 p-3 bg-red-50 border border-red-300 text-red-900 rounded text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 text-red-700 shrink-0" />
+        <div role="alert" className="mb-4 p-4 rounded-[20px] bg-rose-500/15 border border-rose-300 text-rose-900 text-xs font-bold flex items-center gap-2 shadow-clayPill">
+          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* Real Live Transcription Output */}
       <div className="mt-6">
-        <div className="flex items-center justify-between mb-2">
-          <label htmlFor="voice-transcript" className="text-xs font-semibold text-slate-800 flex items-center gap-1.5">
-            <Edit3 className="w-3.5 h-3.5 text-slate-600" />
+        <div className="flex items-center justify-between mb-2 px-1">
+          <label htmlFor="voice-transcript" className="text-xs font-bold text-[#332F3A] flex items-center gap-1.5 font-heading">
+            <Edit3 className="w-3.5 h-3.5 text-[#7C3AED]" />
             Transcribed Text (Patient can review and correct):
           </label>
           {transcript && (
             <button
               type="button"
               onClick={handleReset}
-              className="text-[11px] text-slate-500 hover:text-slate-800 flex items-center gap-1"
+              className="text-xs font-bold text-[#635F69] hover:text-[#332F3A] flex items-center gap-1 cursor-pointer transition-colors"
             >
               <RotateCcw className="w-3 h-3" />
               Clear
@@ -187,15 +187,15 @@ export const VoiceRecorderPanel: React.FC<VoiceRecorderPanelProps> = ({
             onTranscriptReady(e.target.value);
           }}
           placeholder="Transcription will appear here as you speak. You can edit or type corrections directly..."
-          className="w-full p-3 border border-slate-300 rounded text-sm text-slate-900 leading-relaxed focus:ring-1 focus:ring-teal-700 focus:outline-hidden bg-slate-50"
+          className="clay-input rounded-[24px] p-5 leading-relaxed resize-none"
         />
 
         {transcript && (
-          <div className="mt-3 flex justify-end">
+          <div className="mt-4 flex justify-end">
             <button
               type="button"
               onClick={handleConfirmEdit}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-800 hover:bg-teal-700 text-white rounded text-xs font-semibold"
+              className="clay-btn-primary text-xs px-6 py-3 min-h-[44px] rounded-[18px]"
             >
               <Check className="w-3.5 h-3.5" />
               Save Dictation

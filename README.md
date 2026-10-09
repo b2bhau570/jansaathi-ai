@@ -60,7 +60,7 @@ JANSAATHI AI features an honest capability registry for 13 Indian languages:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-org/jansaathi-ai.git
+git clone https://github.com/b2bhau570/jansaathi-ai.git
 cd jansaathi-ai
 
 # 2. Install dependencies
@@ -81,12 +81,30 @@ npm run build
 
 ---
 
+### Medical Hardware Telemetry & Arduino Firmware
+JANSAATHI AI connects natively to sub-$10 USB microcontrollers via the browser **Web Serial API** (`navigator.serial`):
+- **ESP32 DevKit V1** firmware located at: `firmware/jansaathi_esp32_vitals/jansaathi_esp32_vitals.ino`
+- **AD8232 Lead-I ECG Sensor** (100 Hz medical stream at 25 mm/s standard)
+- **MAX30102 Pulse Oximeter** (SpO2 oxygen saturation + 50 Hz Photoplethysmograph PPG pulse wave)
+- **Real-Time Electronic Calipers**: Live measurement of Mean R-R, PR interval, QRS duration, Bazett-corrected QTc, and Perfusion Index (PI).
+- **Living Physiological Simulation**: Respiratory Sinus Arrhythmia (RSA 72–76 bpm across 4.0s breath cycle) with ~180ms Pulse Transit Time (PTT).
+
+---
+
+### Pitch Deck & Submission Materials
+- **Official Pitch Deck PDF**: [`JANSAATHI_AI_Pitch_Deck.pdf`](./JANSAATHI_AI_Pitch_Deck.pdf)
+- **Interactive Slide Deck**: [`pitch_deck.html`](./pitch_deck.html)
+- **Architecture Diagram**: [`docs/images/architecture_diagram.jpg`](./docs/images/architecture_diagram.jpg)
+- **Project Report**: [`JANSAATHI_AI_Comprehensive_Project_Report.docx`](./JANSAATHI_AI_Comprehensive_Project_Report.docx)
+
+---
+
 ### Key Workflows
 
 1. **Patient Intake (`/patient`)**:
    - Informed consent acknowledgment (mandatory).
-   - Language selection with capability badges.
-   - Multimodal input: Voice dictation, Multilingual text, Report OCR upload, Telemetry vital signs.
+   - Language selection with capability badges across 13 Indian languages.
+   - Multimodal input: Voice dictation, Multilingual text, Report OCR upload, Medical Hardware Telemetry (ECG + SpO2).
    - Plain-language review of what the system understood.
    - Submission confirmation with anonymous case identifier (e.g., `P-2026-000001`).
 
@@ -97,7 +115,7 @@ npm run build
 3. **Case Detail Workspace (`/cases/:id`)**:
    - High-visibility deterministic urgency banner with clinical rationale.
    - Structured triage note with multi-source evidence tags (`PATIENT_VOICE`, `PATIENT_TEXT`, `REPORT_OCR`, `HARDWARE_READING`).
-   - Attached diagnostic scans with side-by-side OCR inspector.
+   - Standard 15-second rhythm strip with electronic calipers and one-click printable diagnostic dossier.
    - Identified clinical gaps and non-leading clarifying questions.
    - Attending clinician observations, disposition recording, and transfer note generation.
    - Tamper-evident immutable audit trail.

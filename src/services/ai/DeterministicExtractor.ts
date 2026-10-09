@@ -177,7 +177,7 @@ export class DeterministicExtractor implements IAIProvider {
       medications_reported: medicationsReported,
       allergies_reported: allergiesReported,
       missing_information: missingInfoLabels,
-      follow_up_questions: followUps,
+      follow_up_questions: followUps.map((q) => q.question),
       uncertainties,
       source_references: sources,
       ai_provider: this.name,

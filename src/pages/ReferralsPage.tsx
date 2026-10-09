@@ -1,11 +1,11 @@
-// JANSAATHI AI - Clinical Referrals & Transfer Notes Page (/referrals)
+// JANSAATHI AI - High-Fidelity Claymorphism Clinical Referrals & Transfer Notes Page (/referrals)
 // Repository of structured referrals authorized by attending medical officers.
 
 import React, { useEffect, useState } from 'react';
 import { CaseService } from '../services/supabase/CaseService';
 import { ReferralNote, TriageCase } from '../types';
 import { ClinicalDisclaimer } from '../components/common/ClinicalDisclaimer';
-import { FileText, Building2, Printer, CheckCircle2 } from 'lucide-react';
+import { FileText, Building2, Printer } from 'lucide-react';
 
 export const ReferralsPage: React.FC = () => {
   const [cases, setCases] = useState<TriageCase[]>([]);
@@ -26,33 +26,35 @@ export const ReferralsPage: React.FC = () => {
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <ClinicalDisclaimer />
 
-        <div className="my-6">
-          <div className="flex items-center gap-2">
-            <FileText className="w-6 h-6 text-purple-800" />
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <div className="flex items-center gap-3.5 my-4">
+          <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white shadow-clayOrb shrink-0">
+            <FileText className="w-7 h-7" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-black text-[#332F3A] tracking-tight font-heading">
               Authorized Clinical Referral Orders
             </h1>
+            <p className="text-xs font-semibold text-[#635F69] mt-0.5">
+              Doctor-authorized inter-facility transfers &bull; Standardized triage clinical handoff documentation
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Doctor-authorized inter-facility transfers &bull; Standardized triage clinical handoff documentation
-          </p>
         </div>
 
         {loading ? (
-          <div className="p-8 text-center text-xs text-slate-500 bg-white rounded border border-slate-300">
+          <div className="clay-card rounded-[32px] p-12 text-center text-xs font-bold text-[#635F69] animate-clay-breathe">
             Querying clinical referrals...
           </div>
         ) : referrals.length === 0 ? (
-          <div className="bg-white rounded border border-slate-300 p-12 text-center shadow-xs">
-            <Building2 className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <h4 className="text-sm font-semibold text-slate-800">
+          <div className="clay-card rounded-[36px] p-14 text-center">
+            <Building2 className="w-14 h-14 text-purple-300 mx-auto mb-3" />
+            <h4 className="text-base font-black text-[#332F3A] font-heading">
               No hospital referral notes have been authorized yet.
             </h4>
-            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+            <p className="text-xs text-[#635F69] font-medium mt-1 max-w-sm mx-auto">
               When an attending clinician determines that specialist care is required and authorizes a transfer in the case review workspace, the note is indexed here.
             </p>
           </div>
@@ -61,24 +63,24 @@ export const ReferralsPage: React.FC = () => {
             {referrals.map((ref) => (
               <div
                 key={ref.id}
-                className="bg-white rounded border border-slate-300 p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="clay-card-static rounded-[28px] p-6 bg-white/85 shadow-clayCard flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-slate-900 text-sm">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-mono font-black text-[#7C3AED] text-base">
                       {ref.case_number}
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-200 text-xs font-semibold">
+                    <span className="clay-pill bg-purple-500/15 text-[#7C3AED] text-xs font-bold">
                       Authorized Referral
                     </span>
                   </div>
-                  <div className="text-xs font-semibold text-slate-800">
+                  <div className="text-sm font-bold text-[#332F3A] font-heading">
                     Destination: {ref.receiving_facility_name}
                   </div>
-                  <div className="text-xs text-slate-600">
-                    <strong>Reason:</strong> {ref.reason_for_referral}
+                  <div className="text-xs text-[#635F69] font-medium">
+                    <strong className="text-[#332F3A]">Reason:</strong> {ref.reason_for_referral}
                   </div>
-                  <div className="text-[11px] text-slate-500">
+                  <div className="text-[11px] text-[#635F69] font-medium">
                     Authorized By: {ref.clinician_name} ({ref.clinician_registration}) &bull;{' '}
                     {ref.authorised_at ? new Date(ref.authorised_at).toLocaleString() : ''}
                   </div>
@@ -87,10 +89,10 @@ export const ReferralsPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-100 rounded text-xs font-semibold shrink-0"
+                  className="clay-btn-secondary text-xs px-5 py-2.5 h-11 rounded-[18px] shrink-0"
                 >
-                  <Printer className="w-3.5 h-3.5" />
-                  Print Referral Sheet
+                  <Printer className="w-4 h-4 text-[#7C3AED]" />
+                  <span>Print Referral Sheet</span>
                 </button>
               </div>
             ))}

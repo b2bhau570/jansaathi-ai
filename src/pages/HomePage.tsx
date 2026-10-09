@@ -1,5 +1,5 @@
-// JANSAATHI AI - Public Landing Page
-// Production healthcare infrastructure overview. Human-in-the-loop triage support.
+// JANSAATHI AI - High-Fidelity Claymorphism Landing Page
+// Tactile silicone & digital clay materiality, 4-layer shadow stacks, Nunito Black display typography, and zero sharp corners
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -15,155 +15,264 @@ import {
   ArrowRight,
   CheckCircle2,
   Building,
-  Lock,
+  Sparkles,
+  Search,
+  HeartPulse,
+  Award,
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="bg-slate-50 min-h-screen">
-      {/* Top Notice */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+    <div className="min-h-screen py-4 sm:py-6">
+      {/* Top Advisory Pill Banner */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <ClinicalDisclaimer />
       </div>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-100/80 border border-teal-300 rounded-full text-xs font-semibold text-teal-900">
-              <span className="w-2 h-2 rounded-full bg-teal-600"></span>
-              <span>Public Health Infrastructure &bull; Zero Software Cost Architecture</span>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Hero Content Left */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 border border-white/90 shadow-clayPill text-xs font-black tracking-wide text-[#7C3AED] font-heading">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#DB2777] shadow-xs animate-ping"></span>
+              <span>DIGITAL CLAY TRIAGE &bull; PUBLIC HEALTH INFRASTRUCTURE</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Structured Triage Support for Faster Human Review
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl font-black text-[#332F3A] tracking-tight leading-[1.08] font-heading">
+              Structured Triage <br />
+              <span className="clay-text-gradient">For Faster Human Review</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl">
-              Patient health information in public clinics is often multilingual, fragmented, and difficult to review quickly.
-              JANSAATHI AI converts messy patient-provided statements and lab reports into a clean, structured triage note for a qualified healthcare professional to review.
+            <p className="text-base sm:text-lg lg:text-xl text-[#635F69] font-medium leading-relaxed max-w-2xl font-body">
+              Patient health information in rural clinics is often multilingual, fragmented, and urgent.
+              JANSAATHI AI transforms spoken vernacular statements and lab reports into a structured, tactile triage dossier ready for licensed clinicians.
             </p>
 
-            <div className="p-4 bg-white rounded border border-slate-300 shadow-xs text-xs text-slate-800 space-y-2">
-              <div className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">
-                Core Operational Mandate:
+            {/* Core Mandates Clay Pill Panel */}
+            <div className="clay-card-static rounded-[28px] p-6 bg-white/70">
+              <div className="font-black text-[#332F3A] uppercase tracking-wider text-xs mb-3.5 flex items-center gap-2 font-heading">
+                <Sparkles className="w-4 h-4 text-[#7C3AED]" />
+                <span>Deterministic Clinical Safety Protocol:</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div className="flex items-center gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-bold text-[#332F3A] font-heading">
+                <div className="flex items-center gap-2.5 p-2 rounded-2xl bg-emerald-500/10 border border-emerald-300/40">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Never acts as a doctor</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5 p-2 rounded-2xl bg-emerald-500/10 border border-emerald-300/40">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Never diagnoses or prescribes</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5 p-2 rounded-2xl bg-emerald-500/10 border border-emerald-300/40">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Deterministic urgency rule engine</span>
+                  <span>Deterministic urgency engine</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5 p-2 rounded-2xl bg-emerald-500/10 border border-emerald-300/40">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>A qualified human always decides</span>
+                  <span>A licensed doctor decides</span>
                 </div>
               </div>
             </div>
 
+            {/* CTAs with Squish and Depth */}
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
               <Link
                 to="/patient"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-teal-800 hover:bg-teal-700 text-white font-semibold text-sm rounded shadow-sm transition-colors"
+                className="clay-btn-primary w-full sm:w-auto text-base px-8 py-4 h-16 rounded-[22px] group"
               >
-                <span>Start Patient Intake Portal</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Start Patient Intake</span>
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                to="/status"
+                className="clay-btn-secondary w-full sm:w-auto text-base px-7 py-4 h-16 rounded-[22px] group"
+              >
+                <Search className="w-5 h-5 text-[#7C3AED]" />
+                <span>Track Case ID</span>
               </Link>
               <Link
                 to="/cases"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-sm rounded border border-slate-300 shadow-2xs transition-colors"
+                className="clay-btn-accent-pink w-full sm:w-auto text-base px-7 py-4 h-16 rounded-[22px]"
               >
-                <Stethoscope className="w-4 h-4 text-teal-700" />
-                <span>Open Clinical Triage Queue</span>
+                <Stethoscope className="w-5 h-5" />
+                <span>Doctor Queue</span>
               </Link>
             </div>
           </div>
 
-          {/* Quick Metrics / Workflow Card */}
-          <div className="lg:col-span-5 bg-white rounded border border-slate-300 p-6 shadow-xs space-y-5">
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider pb-3 border-b border-slate-200">
-              Target Clinical Environments
-            </h2>
+          {/* Hero Bento Composition Right */}
+          <div className="lg:col-span-5 space-y-5">
+            {/* Main Interactive Clay Showcase Card */}
+            <div className="clay-card rounded-[36px] p-7 sm:p-8 space-y-6 relative">
+              <div className="flex items-center justify-between pb-4 border-b border-purple-100">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center shadow-clayOrb text-white">
+                    <HeartPulse className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-black text-[#332F3A] font-heading">
+                      PHC Triage Engine
+                    </h2>
+                    <span className="text-xs font-semibold text-[#635F69]">Primary Care Assist</span>
+                  </div>
+                </div>
+                <span className="clay-pill bg-emerald-500/15 text-emerald-800 text-[11px]">
+                  Realtime Active
+                </span>
+              </div>
 
-            <div className="space-y-3 text-xs text-slate-700">
-              <div className="flex items-start gap-3 p-3 bg-slate-50 rounded border border-slate-200">
-                <Building className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Primary Health Centres (PHCs) & CHCs</strong>
-                  <span>Helps Community Health Officers (CHOs) summarize patient presentations before telemedicine doctor calls.</span>
+              {/* Clay Feature Pills inside Card */}
+              <div className="space-y-3.5 text-xs sm:text-sm font-medium text-[#332F3A]">
+                <div className="flex items-start gap-3.5 p-4 rounded-[22px] bg-white/90 shadow-clayPill border border-white">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <Building className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="text-[#332F3A] block font-heading text-sm font-bold">Primary Health Centres (PHCs)</strong>
+                    <span className="text-[#635F69] text-xs leading-relaxed">Assists frontline Community Health Officers in preparing structured dossiers prior to teleconsultation.</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5 p-4 rounded-[22px] bg-white/90 shadow-clayPill border border-white">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <Activity className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="text-[#332F3A] block font-heading text-sm font-bold">Health Camps & Mobile Vans</strong>
+                    <span className="text-[#635F69] text-xs leading-relaxed">Handles loud, noisy environments with smart voice input, local speech processing, and offline fallback.</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5 p-4 rounded-[22px] bg-white/90 shadow-clayPill border border-white">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="text-[#332F3A] block font-heading text-sm font-bold">Protected Audit Ledger</strong>
+                    <span className="text-[#635F69] text-xs leading-relaxed">Non-deletable clinical case records strictly protected by PostgreSQL Row Level Security.</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3 bg-slate-50 rounded border border-slate-200">
-                <Activity className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Public Health Camps & Company Clinics</strong>
-                  <span>Rapid triage during high-volume health screenings and industrial-estate medical units.</span>
+              {/* Floating Stat Orbs */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <div className="p-3.5 rounded-2xl bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-200/50 text-center shadow-clayPill">
+                  <div className="text-xl sm:text-2xl font-black text-[#7C3AED] font-heading">13+</div>
+                  <div className="text-[10px] font-bold text-[#635F69] uppercase tracking-wide">Languages</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-gradient-to-br from-pink-500/10 to-rose-500/10 border border-pink-200/50 text-center shadow-clayPill">
+                  <div className="text-xl sm:text-2xl font-black text-[#DB2777] font-heading">100%</div>
+                  <div className="text-[10px] font-bold text-[#635F69] uppercase tracking-wide">Doctor Led</div>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-gradient-to-br from-sky-500/10 to-cyan-500/10 border border-sky-200/50 text-center shadow-clayPill">
+                  <div className="text-xl sm:text-2xl font-black text-[#0EA5E9] font-heading">0₹</div>
+                  <div className="text-[10px] font-bold text-[#635F69] uppercase tracking-wide">Software Cost</div>
                 </div>
               </div>
-
-              <div className="flex items-start gap-3 p-3 bg-slate-50 rounded border border-slate-200">
-                <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Campus & Occupational Health Units</strong>
-                  <span>Standardizes baseline symptom capture with zero patient data resale or profiling.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
-              <span>Security: Supabase Row Level Security</span>
-              <span className="font-mono text-emerald-700 font-semibold">Active RLS</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Architecture Highlights Section */}
-      <section className="bg-white border-y border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-2xl font-bold text-slate-900">
-              Rigorous Healthcare Safety & Multi-Provenance Architecture
-            </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Every design choice reflects clinical accountability, privacy by design, and zero software investment requirements.
+      {/* High-Fidelity Bento Grid Features Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+          <div className="inline-block clay-pill bg-violet-100 text-[#7C3AED] text-xs font-black uppercase font-heading">
+            Zero Software Cost Public Architecture
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#332F3A] tracking-tight font-heading">
+            Engineering for India's Primary Care Realities
+          </h2>
+          <p className="text-base sm:text-lg text-[#635F69] font-medium leading-relaxed font-body">
+            Every layer embraces physical tangibility, deterministic safety, and zero commercial vendor lock-in.
+          </p>
+        </div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Bento Card 1 */}
+          <div className="clay-card rounded-[32px] p-8 space-y-4 hover:scale-[1.02]">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white shadow-clayOrb mb-4">
+              <Globe2 className="w-7 h-7" />
+            </div>
+            <h3 className="text-2xl font-black text-[#332F3A] font-heading">
+              13 Indian Languages
+            </h3>
+            <p className="text-sm text-[#635F69] font-medium leading-relaxed font-body">
+              Honest speech and vernacular text recognition across Hindi, Odia, Bengali, Telugu, Tamil, Marathi, and more. Transparent fallback ensures users are never trapped in failed audio prompts.
             </p>
+            <div className="pt-2">
+              <span className="clay-pill bg-blue-500/15 text-blue-900 text-xs">
+                Zero Cloud STT Fees
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-5 bg-slate-50 rounded border border-slate-200">
-              <Globe2 className="w-8 h-8 text-teal-700 mb-3" />
-              <h3 className="text-base font-bold text-slate-900 mb-1">13 Indian Languages</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Honest capability registry for Hindi, Odia, Bengali, Telugu, Tamil, Marathi, and more. When browser speech recognition is not supported for a language, the interface cleanly guides the user to text input without simulating fake recognition.
-              </p>
+          {/* Bento Card 2 */}
+          <div className="clay-card rounded-[32px] p-8 space-y-4 hover:scale-[1.02]">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white shadow-clayOrb mb-4">
+              <Cpu className="w-7 h-7" />
             </div>
+            <h3 className="text-2xl font-black text-[#332F3A] font-heading">
+              Deterministic Urgency Rules
+            </h3>
+            <p className="text-sm text-[#635F69] font-medium leading-relaxed font-body">
+              Emergency escalation cannot be trusted to unpredictable generative AI hallucination. Hard-coded, audit-trailed clinical rules flag red-flag symptoms with mathematically predictable precision.
+            </p>
+            <div className="pt-2">
+              <span className="clay-pill bg-purple-500/15 text-purple-900 text-xs">
+                Audited Clinical Safety
+              </span>
+            </div>
+          </div>
 
-            <div className="p-5 bg-slate-50 rounded border border-slate-200">
-              <Cpu className="w-8 h-8 text-teal-700 mb-3" />
-              <h3 className="text-base font-bold text-slate-900 mb-1">Deterministic Urgency Engine</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                We never let an LLM decide clinical emergency. Predefined, version-controlled rules evaluate acute chest pain, respiratory distress, stroke signals, and vital hypoxia objectively.
-              </p>
+          {/* Bento Card 3 */}
+          <div className="clay-card rounded-[32px] p-8 space-y-4 hover:scale-[1.02]">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-white shadow-clayOrb mb-4">
+              <FileCheck2 className="w-7 h-7" />
             </div>
+            <h3 className="text-2xl font-black text-[#332F3A] font-heading">
+              In-Browser Optical Character Recognition
+            </h3>
+            <p className="text-sm text-[#635F69] font-medium leading-relaxed font-body">
+              Client-side Tesseract.js processes blood work, CBC results, and doctor prescriptions entirely on the local device without sending sensitive medical scans to third-party image hosts.
+            </p>
+            <div className="pt-2">
+              <span className="clay-pill bg-pink-500/15 text-pink-900 text-xs">
+                Client-Side Privacy
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="p-5 bg-slate-50 rounded border border-slate-200">
-              <FileCheck2 className="w-8 h-8 text-teal-700 mb-3" />
-              <h3 className="text-base font-bold text-slate-900 mb-1">In-Browser OCR & Telemetry</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Extracts lab parameters locally via Tesseract.js Web Workers without paid external APIs. Connects directly to pulse oximeters and medical telemetry devices via Web Serial and Web Bluetooth.
-              </p>
-            </div>
+      {/* Bottom Sticky Squish CTA Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="rounded-[40px] sm:rounded-[48px] bg-gradient-to-br from-[#8B5CF6]/20 via-[#EC4899]/15 to-[#0EA5E9]/20 backdrop-blur-2xl border border-white p-8 sm:p-12 shadow-clayCard flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 text-center md:text-left">
+            <h3 className="text-3xl sm:text-4xl font-black text-[#332F3A] font-heading">
+              Ready to experience modern clinical triage?
+            </h3>
+            <p className="text-base text-[#635F69] font-medium max-w-xl font-body">
+              Start an intake as a patient or inspect live clinical triage queues with interactive AI clarification.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <Link
+              to="/patient"
+              className="clay-btn-primary px-8 py-4 h-16 text-base text-center"
+            >
+              Intake Workflow
+            </Link>
+            <Link
+              to="/status"
+              className="clay-btn-secondary px-8 py-4 h-16 text-base text-center"
+            >
+              Check Case Status
+            </Link>
           </div>
         </div>
       </section>

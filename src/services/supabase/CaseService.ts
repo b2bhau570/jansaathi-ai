@@ -18,6 +18,11 @@ import { AuditService } from './AuditService';
 
 const LOCAL_CASES_STORAGE_KEY = 'jansaathi_cases_store';
 
+export function isValidUuid(id?: string): boolean {
+  if (!id) return false;
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
+}
+
 export class CaseService {
   // Generate human-readable anonymous case ID (e.g. P-2026-000001)
   public static generateCaseNumber(): string {
@@ -55,7 +60,10 @@ export class CaseService {
     hardwareReadings?: HardwareReading[];
     reports?: ReportDocument[];
   }): Promise<TriageCase> {
-    const caseId = `case-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const caseId =
+      typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `00000000-0000-4000-8000-${Date.now().toString(16).padStart(12, '0')}`;
     const caseNumber = this.generateCaseNumber();
     const now = new Date().toISOString();
 
@@ -143,6 +151,21 @@ export class CaseService {
             });
           }
         }
+
+        if (params.hardwareReadings && params.hardwareReadings.length > 0) {
+          for (const reading of params.hardwareReadings) {
+            await supabase.from('hardware_readings').insert({
+              id: reading.id,
+              case_id: newCase.id,
+              reading_type: reading.reading_type,
+              numerical_value: reading.numerical_value,
+              unit: reading.unit,
+              is_stable: reading.is_stable,
+              measured_at: reading.measured_at,
+              waveform_samples: reading.waveform_samples,
+            });
+          }
+        }
       } catch (err) {
         console.warn('Supabase case insertion error (persisted locally):', err);
       }
@@ -188,19 +211,71 @@ export class CaseService {
     return this.getLocalCases();
   }
 
-  // Fetch case by ID
-  public static async getCaseById(id: string): Promise<TriageCase | null> {
-    const local = this.getLocalCases().find((c) => c.id === id || c.case_number === id);
+  // Fetch case by ID or Case Number (e.g. P-2026-000001)
+  public static async getCaseById(queryId: string): Promise<TriageCase | null> {
+    if (!queryId) return null;
+    const cleanId = queryId.trim();
+
+    // 1. Check local storage first
+    const local = this.getLocalCases().find(
+      (c) =>
+        c.id === cleanId ||
+        c.case_number.toLowerCase() === cleanId.toLowerCase()
+    );
     if (local) return local;
 
+    // 2. Query Supabase
     if (isSupabaseConfigured) {
       try {
-        const { data, error } = await supabase.from('triage_cases').select('*').eq('id', id).single();
-        if (!error && data) {
-          return data as TriageCase;
+        let query = supabase.from('triage_cases').select('*');
+        if (cleanId.startsWith('P-') || cleanId.startsWith('p-')) {
+          query = query.ilike('case_number', cleanId);
+        } else {
+          query = query.or(`id.eq.${cleanId},case_number.ilike.${cleanId}`);
         }
-      } catch {
-        // Fall through
+
+        const { data: caseData, error } = await query.maybeSingle();
+
+        if (!error && caseData) {
+          // Fetch related reviews, extractions, flags, referrals, hardware readings
+          const [reviewsRes, extractionsRes, flagsRes, referralsRes, hardwareRes] = await Promise.all([
+            supabase.from('clinician_reviews').select('*').eq('case_id', caseData.id),
+            supabase.from('triage_extractions').select('*').eq('case_id', caseData.id).maybeSingle(),
+            supabase.from('urgency_flags').select('*').eq('case_id', caseData.id),
+            supabase.from('referrals').select('*').eq('case_id', caseData.id).maybeSingle(),
+            supabase.from('hardware_readings').select('*').eq('case_id', caseData.id),
+          ]);
+
+          const fullCase: TriageCase = {
+            id: caseData.id,
+            case_number: caseData.case_number,
+            input_language: caseData.input_language || 'en',
+            status: caseData.status,
+            priority_level: caseData.priority_level,
+            primary_concern: caseData.primary_concern,
+            reported_duration: caseData.reported_duration,
+            created_at: caseData.created_at,
+            updated_at: caseData.updated_at,
+            extractions: extractionsRes.data || undefined,
+            clinician_reviews: (reviewsRes.data || []).map((r: any) => ({
+              id: r.id,
+              case_id: caseData.id,
+              clinician_id: r.clinician_id,
+              clinician_name: r.clinician_name || 'Attending Medical Officer',
+              review_notes: r.review_notes,
+              corrections_made: r.corrections_made,
+              clinical_status: r.clinical_status,
+              verified_extractions: r.verified_extractions,
+              reviewed_at: r.reviewed_at || r.created_at,
+            })),
+            urgency_flags: flagsRes.data || [],
+            referral: referralsRes.data || undefined,
+            hardware_readings: (hardwareRes?.data && hardwareRes.data.length > 0 ? (hardwareRes.data as HardwareReading[]) : local?.hardware_readings) || [],
+          };
+          return fullCase;
+        }
+      } catch (err) {
+        console.warn('Error fetching case by ID from Supabase:', err);
       }
     }
 
@@ -260,16 +335,19 @@ export class CaseService {
       this.saveLocalCases(cases);
     }
 
-    if (isSupabaseConfigured) {
+    if (isSupabaseConfigured && isValidUuid(caseId)) {
       try {
-        await supabase.from('clinician_reviews').insert({
-          case_id: caseId,
-          clinician_id: review.clinician_id,
-          review_notes: review.review_notes,
-          corrections_made: review.corrections_made || {},
-          clinical_status: review.clinical_status,
-          verified_extractions: review.verified_extractions,
-        });
+        const clinicianUuid = isValidUuid(review.clinician_id) ? review.clinician_id : null;
+        if (clinicianUuid) {
+          await supabase.from('clinician_reviews').insert({
+            case_id: caseId,
+            clinician_id: clinicianUuid,
+            review_notes: review.review_notes,
+            corrections_made: review.corrections_made || {},
+            clinical_status: review.clinical_status,
+            verified_extractions: review.verified_extractions,
+          });
+        }
         await supabase.from('triage_cases').update({ status: 'COMPLETED', updated_at: now }).eq('id', caseId);
       } catch (err) {
         console.warn('Supabase clinician review insert error:', err);

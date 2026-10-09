@@ -16,6 +16,8 @@ export interface TranslationDictionary {
     audit: string;
     admin: string;
     login: string;
+    register: string;
+    trackStatus: string;
     logout: string;
   };
   consent: {
@@ -86,6 +88,8 @@ export const TRANSLATIONS: Record<string, TranslationDictionary> = {
       audit: 'Audit Trail',
       admin: 'Administration',
       login: 'Staff Login',
+      register: 'Register',
+      trackStatus: 'Track Case Status',
       logout: 'Sign Out',
     },
     consent: {
@@ -154,6 +158,8 @@ export const TRANSLATIONS: Record<string, TranslationDictionary> = {
       audit: 'ऑडिट लॉग',
       admin: 'प्रशासन',
       login: 'स्टाफ लॉगिन',
+      register: 'पंजीकरण',
+      trackStatus: 'केस स्थिति देखें',
       logout: 'लॉगआउट',
     },
     consent: {
@@ -222,6 +228,8 @@ export const TRANSLATIONS: Record<string, TranslationDictionary> = {
       audit: 'ଅଡିଟ୍ ଟ୍ରେଲ୍',
       admin: 'ପ୍ରଶାସନ',
       login: 'ଲଗଇନ୍',
+      register: 'ପଞ୍ଜୀକରଣ',
+      trackStatus: 'କେସ୍ ସ୍ଥିତି ଦେଖନ୍ତୁ',
       logout: 'ଲଗଆଉଟ୍',
     },
     consent: {

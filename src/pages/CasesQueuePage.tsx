@@ -1,4 +1,4 @@
-// JANSAATHI AI - Clinical Triage Queue Page
+// JANSAATHI AI - High-Fidelity Claymorphism Clinical Triage Queue Page
 // Workstation queue for attending physicians and community health officers. Zero fake data.
 
 import React, { useEffect, useState } from 'react';
@@ -24,37 +24,39 @@ export const CasesQueuePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-slate-50 min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <ClinicalDisclaimer />
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-6">
-          <div>
-            <div className="flex items-center gap-2">
-              <Stethoscope className="w-6 h-6 text-teal-800" />
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-[#A78BFA] to-[#7C3AED] text-white flex items-center justify-center shrink-0 shadow-clayOrb">
+              <Stethoscope className="w-7 h-7" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-black text-[#332F3A] tracking-tight font-heading">
                 Clinical Triage Review Queue
               </h1>
+              <p className="text-xs font-semibold text-[#635F69] mt-0.5">
+                Deterministic priority signals &bull; Human-in-the-loop clinical review &bull; Anonymous Case Identifiers
+              </p>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Deterministic priority sorting &bull; Human-in-the-loop clinical review &bull; Anonymous Case Identifiers
-            </p>
           </div>
 
           <button
             type="button"
             onClick={fetchCases}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded text-xs font-semibold shadow-2xs transition-colors self-start sm:self-auto"
+            className="clay-btn-secondary text-xs px-5 py-2.5 h-12 rounded-[20px] self-start sm:self-auto"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 text-[#7C3AED] ${loading ? 'animate-spin' : ''}`} />
             <span>Refresh Queue</span>
           </button>
         </div>
 
         {loading ? (
-          <div className="p-12 text-center text-xs text-slate-500 bg-white rounded border border-slate-300">
-            Querying live cases from database...
+          <div className="clay-card rounded-[32px] p-14 text-center text-xs font-bold text-[#635F69] animate-clay-breathe">
+            Querying live cases from Supabase medical queue...
           </div>
         ) : (
           <TriageQueueTable cases={cases} />

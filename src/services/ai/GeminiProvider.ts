@@ -8,7 +8,7 @@ import { DeterministicExtractor } from './DeterministicExtractor';
 
 export class GeminiProvider implements IAIProvider {
   public readonly name = 'Google Gemini AI';
-  public readonly model = 'gemini-2.0-flash';
+  public readonly model = 'gemini-2.5-flash';
   private apiKey: string | undefined;
 
   constructor(apiKey?: string) {
@@ -70,25 +70,37 @@ ${input.hardwareReadingsSummary || 'None measured'}
 
     try {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: 'user',
-              parts: [{ text: `${systemPrompt}\n\n${userContent}` }],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: 'application/json',
-          },
-        }),
-      });
+      let response: Response | null = null;
 
-      if (!response.ok) {
-        throw new Error(`Gemini API responded with status ${response.status}`);
+      for (let attempt = 0; attempt < 3; attempt++) {
+        response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: `${systemPrompt}\n\n${userContent}` }],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.1,
+              responseMimeType: 'application/json',
+            },
+          }),
+        });
+
+        if (response.ok) break;
+        if (response.status === 503 || response.status === 429) {
+          // Temporary server load spike - wait 1.2s before retry
+          await new Promise((r) => setTimeout(r, 1200));
+        } else {
+          break;
+        }
+      }
+
+      if (!response || !response.ok) {
+        throw new Error(`Gemini API responded with status ${response?.status || 'network_error'}`);
       }
 
       const json = await response.json();
@@ -114,5 +126,94 @@ ${input.hardwareReadingsSummary || 'None measured'}
       const fallback = new DeterministicExtractor();
       return fallback.extractTriageInformation(input);
     }
+  }
+
+  // Answer patient doubts regarding their case summary and doctor review
+  public async answerPatientDoubt(params: {
+    chiefComplaint: string;
+    symptoms: string[];
+    duration?: string;
+    doctorNotes?: string;
+    disposition?: string;
+    patientQuestion: string;
+    language?: string;
+  }): Promise<string> {
+    if (!this.isAvailable()) {
+      return this.fallbackDoubtAnswer(params);
+    }
+
+    const systemPrompt = `You are the JANSAATHI AI Patient Assistant for a public healthcare clinic in India.
+A patient who submitted their triage symptoms is asking a follow-up doubt or question about their symptoms, doctor's recommendations, or general home care.
+
+SAFETY & CLINICAL BOUNDARIES:
+1. Provide a clear, empathetic, supportive answer in simple language suitable for common citizens.
+2. If the doctor has already posted clinical notes, reinforce and explain the doctor's instructions in easy-to-understand terms.
+3. NEVER prescribe new prescription medications, adjust drug doses, or contradict medical professionals.
+4. You may suggest standard non-pharmacological supportive care (e.g., adequate fluid intake, resting, fever sponging, oral rehydration) if appropriate.
+5. If the patient describes sudden alarming symptoms (crushing chest pain, severe breathlessness, fainting, uncontrolled bleeding, severe stiff neck), strongly advise them to notify attending staff or visit the nearest emergency room immediately.
+6. Answer directly in the requested language (${params.language || 'English'}), keeping the answer concise (2-3 short paragraphs max).`;
+
+    const userPrompt = `Patient Case Context:
+- Chief Complaint: ${params.chiefComplaint || 'General discomfort'}
+- Reported Symptoms: ${params.symptoms?.join(', ') || 'None detailed'}
+- Reported Duration: ${params.duration || 'Not specified'}
+- Doctor's Review Notes: ${params.doctorNotes || 'Doctor has not completed review yet'}
+- Clinical Status / Disposition: ${params.disposition || 'Pending review'}
+
+Patient Doubt / Question:
+"${params.patientQuestion}"
+
+Please answer the patient's doubt directly, empathetically, and safely.`;
+
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.2,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gemini error ${response.status}`);
+      }
+
+      const json = await response.json();
+      const answer = json.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!answer) throw new Error('Empty Gemini response');
+      return answer;
+    } catch (err) {
+      console.warn('Gemini doubt answer error, using fallback:', err);
+      return this.fallbackDoubtAnswer(params);
+    }
+  }
+
+  private fallbackDoubtAnswer(params: {
+    chiefComplaint: string;
+    symptoms: string[];
+    doctorNotes?: string;
+    patientQuestion: string;
+  }): string {
+    const docAdvice = params.doctorNotes
+      ? `Regarding your doctor's review: "${params.doctorNotes}" — please follow the attending physician's instructions carefully.`
+      : 'Your case is currently registered in the clinic queue awaiting review by the attending medical officer.';
+
+    return `Thank you for asking about your symptoms (${params.symptoms.slice(0, 3).join(', ') || params.chiefComplaint}).
+
+${docAdvice}
+
+General Care & Advice:
+• Ensure proper rest and maintain good hydration.
+• Do not start unprescribed medications on your own.
+• Important Warning: If your symptoms suddenly become more severe (such as sudden chest tightness, severe shortness of breath, confusion, or high persistent fever), please inform the PHC staff or seek immediate emergency care without delay.`;
   }
 }

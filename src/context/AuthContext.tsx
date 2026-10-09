@@ -21,6 +21,14 @@ interface AuthContextType {
   role: UserRole;
   isAuthenticated: boolean;
   login: (email: string, password?: string, intendedRole?: UserRole) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    fullName: string,
+    role: UserRole,
+    designation?: string,
+    registrationNumber?: string
+  ) => Promise<{ needEmailConfirm: boolean }>;
   logout: () => Promise<void>;
   switchTestingRole: (role: UserRole) => void;
 }
@@ -128,6 +136,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await AuditService.logEvent('LOGIN', intendedRole, { email, role: intendedRole }, undefined, profile.id);
   };
 
+  const register = async (
+    email: string,
+    password: string,
+    fullName: string,
+    intendedRole: UserRole = 'clinician',
+    designation = '',
+    registrationNumber = ''
+  ): Promise<{ needEmailConfirm: boolean }> => {
+    if (isSupabaseConfigured && password) {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            role: intendedRole,
+            designation: designation || undefined,
+            registration_number: registrationNumber || undefined,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.session && data.user) {
+        const profile: UserProfile = {
+          id: data.user.id,
+          email: data.user.email || email,
+          fullName: fullName || data.user.user_metadata?.full_name || email.split('@')[0],
+          role: intendedRole,
+          designation: designation || 'Verified Staff',
+          registrationNumber: registrationNumber || undefined,
+          facilityName: 'District Community Health Centre',
+        };
+        setUser(profile);
+        localStorage.setItem(LOCAL_AUTH_KEY, JSON.stringify(profile));
+        await AuditService.logEvent('LOGIN', intendedRole, { email, role: intendedRole }, undefined, profile.id);
+        return { needEmailConfirm: false };
+      }
+
+      return { needEmailConfirm: true };
+    }
+
+    // Local fallback when running offline or unconfigured
+    const profile: UserProfile = {
+      id: `usr-${Date.now()}`,
+      email,
+      fullName: fullName || email.split('@')[0],
+      role: intendedRole,
+      designation: designation || 'Verified Staff',
+      registrationNumber: registrationNumber || undefined,
+      facilityName: 'District Community Health Centre #4',
+    };
+    setUser(profile);
+    localStorage.setItem(LOCAL_AUTH_KEY, JSON.stringify(profile));
+    await AuditService.logEvent('LOGIN', intendedRole, { email, role: intendedRole }, undefined, profile.id);
+    return { needEmailConfirm: false };
+  };
+
   const logout = async () => {
     if (user) {
       await AuditService.logEvent('LOGOUT', user.role, { email: user.email }, undefined, user.id);
@@ -154,6 +221,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         role: user?.role || 'patient',
         isAuthenticated: Boolean(user),
         login,
+        register,
         logout,
         switchTestingRole,
       }}

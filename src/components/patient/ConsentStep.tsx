@@ -1,5 +1,5 @@
-// JANSAATHI AI - Patient Informed Consent Step
-// Mandatory explicit agreement before capturing any symptom data.
+// JANSAATHI AI - High-Fidelity Claymorphism Patient Informed Consent Step
+// Rounded-[36px] glass-clay card with tactile recessed consent checklist and squish buttons
 
 import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -27,74 +27,74 @@ export const ConsentStep: React.FC<ConsentStepProps> = ({ onConsentGiven, onDecl
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded border border-slate-300 shadow-xs p-6 md:p-8">
-      <div className="flex items-center space-x-3 pb-4 border-b border-slate-200">
-        <div className="w-10 h-10 rounded bg-teal-100 border border-teal-300 flex items-center justify-center shrink-0">
-          <ShieldCheck className="w-6 h-6 text-teal-800" aria-hidden="true" />
+    <div className="max-w-2xl mx-auto clay-card rounded-[36px] p-7 md:p-10">
+      <div className="flex items-center space-x-4 pb-5 border-b border-purple-100">
+        <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center shrink-0 text-white shadow-clayOrb">
+          <ShieldCheck className="w-7 h-7" aria-hidden="true" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-slate-900">{t.consent.title}</h2>
-          <p className="text-xs text-slate-600 mt-0.5">Version 1.0 (2026) &bull; Standard Triage Intake</p>
+          <h2 className="text-2xl font-black text-[#332F3A] font-heading">{t.consent.title}</h2>
+          <p className="text-xs font-semibold text-[#635F69] mt-0.5">Version 1.0 (2026) &bull; Standard Triage Intake</p>
         </div>
       </div>
 
-      <p className="text-sm text-slate-700 my-4 leading-relaxed">{t.consent.purpose}</p>
+      <p className="text-sm text-[#332F3A] my-5 font-medium leading-relaxed">{t.consent.purpose}</p>
 
       {errorMessage && (
         <div
           role="alert"
-          className="mb-4 p-3 bg-red-50 border border-red-300 text-red-900 rounded text-xs flex items-center gap-2"
+          className="mb-5 p-4 bg-rose-500/15 border border-rose-300 rounded-[20px] text-rose-900 text-xs font-bold flex items-center gap-2.5 shadow-clayPill"
         >
-          <AlertCircle className="w-4 h-4 text-red-700 shrink-0" />
+          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      {/* Informed points checkboxes */}
-      <div className="space-y-3.5 my-6 bg-slate-50 p-4 rounded border border-slate-200 text-sm">
-        <label className="flex items-start gap-3 cursor-pointer">
+      {/* Informed points checkboxes inside tactile recessed clay container */}
+      <div className="space-y-4 my-6 bg-[#EFEBF5] p-6 rounded-[28px] shadow-clayPressed text-sm">
+        <label className="flex items-start gap-3.5 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={understoodPurpose}
             onChange={(e) => setUnderstoodPurpose(e.target.checked)}
-            className="mt-1 w-4 h-4 text-teal-700 border-slate-400 rounded focus:ring-teal-600"
+            className="mt-1 w-5 h-5 text-[#7C3AED] rounded-lg accent-[#7C3AED] cursor-pointer"
           />
-          <span className="text-slate-800 leading-snug">{t.consent.point1}</span>
+          <span className="text-[#332F3A] font-medium leading-snug">{t.consent.point1}</span>
         </label>
 
-        <label className="flex items-start gap-3 cursor-pointer">
+        <label className="flex items-start gap-3.5 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={understoodNoDiagnosis}
             onChange={(e) => setUnderstoodNoDiagnosis(e.target.checked)}
-            className="mt-1 w-4 h-4 text-teal-700 border-slate-400 rounded focus:ring-teal-600"
+            className="mt-1 w-5 h-5 text-[#7C3AED] rounded-lg accent-[#7C3AED] cursor-pointer"
           />
-          <span className="text-slate-800 leading-snug font-medium text-slate-900">
+          <span className="text-[#332F3A] font-extrabold leading-snug">
             {t.consent.point2}
           </span>
         </label>
 
-        <label className="flex items-start gap-3 cursor-pointer">
+        <label className="flex items-start gap-3.5 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={understoodHumanReview}
             onChange={(e) => setUnderstoodHumanReview(e.target.checked)}
-            className="mt-1 w-4 h-4 text-teal-700 border-slate-400 rounded focus:ring-teal-600"
+            className="mt-1 w-5 h-5 text-[#7C3AED] rounded-lg accent-[#7C3AED] cursor-pointer"
           />
-          <span className="text-slate-800 leading-snug">{t.consent.point3}</span>
+          <span className="text-[#332F3A] font-medium leading-snug">{t.consent.point3}</span>
         </label>
 
-        <div className="pt-2 border-t border-slate-200 text-xs text-slate-600 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0"></span>
+        <div className="pt-3 border-t border-purple-200/60 text-xs text-[#635F69] font-bold flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0 shadow-xs"></span>
           <span>{t.consent.point4}</span>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-200">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-purple-100">
         <button
           type="button"
           onClick={onDecline}
-          className="w-full sm:w-auto px-4 py-2 border border-slate-300 text-slate-700 rounded text-xs font-semibold hover:bg-slate-100 transition-colors"
+          className="clay-btn-secondary w-full sm:w-auto text-xs px-6 py-3.5 h-13 rounded-[20px]"
         >
           {t.consent.declineButton}
         </button>
@@ -102,7 +102,7 @@ export const ConsentStep: React.FC<ConsentStepProps> = ({ onConsentGiven, onDecl
         <button
           type="button"
           onClick={handleProceed}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-teal-800 hover:bg-teal-700 text-white rounded text-xs font-semibold shadow-xs transition-colors"
+          className="clay-btn-primary w-full sm:w-auto text-xs px-8 py-3.5 h-13 rounded-[20px]"
         >
           <Check className="w-4 h-4" />
           <span>{t.consent.agreeButton}</span>

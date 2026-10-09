@@ -76,6 +76,7 @@ export interface TriageExtraction {
   ai_provider: string;
   model_version: string;
   extracted_at: string;
+  patient_notes_translated?: string;
 }
 
 export interface UrgencyRule {
@@ -111,15 +112,32 @@ export interface UrgencyFlag {
   created_at: string;
 }
 
+export interface EcgClinicalMetrics {
+  heartRate: number;
+  rrIntervalMs: number;
+  prIntervalMs: number;
+  qrsDurationMs: number;
+  qtIntervalMs: number;
+  qtcIntervalMs: number;
+  stDeviationMm: number;
+  rhythmInterpretation: string;
+  isRegular: boolean;
+  recordingDurationSeconds: number;
+  perfusionIndex?: number;
+}
+
 export interface HardwareReading {
   id: string;
   device_id?: string;
   case_id?: string;
-  reading_type: 'SPO2' | 'PULSE_RATE' | 'BODY_TEMPERATURE' | 'BLOOD_PRESSURE';
+  reading_type: 'SPO2' | 'PULSE_RATE' | 'BODY_TEMPERATURE' | 'BLOOD_PRESSURE' | 'ECG';
   numerical_value: number;
   unit: string;
   is_stable: boolean;
   measured_at: string;
+  waveform_samples?: number[];
+  ppg_samples?: number[];
+  clinical_metrics?: EcgClinicalMetrics;
 }
 
 export interface TriageCase {
